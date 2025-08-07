@@ -1,0 +1,49 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Buy Coins - Web3 Checkout</title>
+    <script src="https://sdk.thirdweb.com/js/v5"></script>
+    <style>
+      body {
+        font-family: sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f0f0f0;
+      }
+      #checkout {
+        width: 420px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        border-radius: 12px;
+        overflow: hidden;
+        background-color: white;
+        padding: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="checkout"></div>
+
+    <script>
+      const client = new thirdweb.ThirdwebSDK("sepolia");
+
+      new thirdweb.widgets.CheckoutWidget({
+        client,
+        chain: "sepolia",
+        token: "0xd4937682df3c8aef4fe912a96a74121c0829e664", // USDT Sepolia
+        amount: "1",
+        seller: "0x1e295dDd27f9dD7d5ea0541f24D4EB1DC5ca1b00", // ✅ O'ZINGIZNING WALLET ADDRESSINGIZNI QO'YING
+        name: "Buy 100 GameCoins",
+        description: "Buy 100 in-game coins using USDT",
+        paymentMethods: ["crypto"],
+        onSuccess: (tx) => {
+          // ✅ Unity WebGL bilan aloqa qilish
+          window.parent.postMessage({ type: "BUY_SUCCESS", amount: "100" }, "*");
+        },
+      }).render("#checkout");
+    </script>
+  </body>
+</html>
